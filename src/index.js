@@ -4,15 +4,11 @@ import ReactDOM from 'react-dom';
 
 import CommentsApp from './containers/app';
 import { createStore } from 'redux';
-import reducer from './reducers/reducer';
+import { Provider } from 'react-redux';
+import comments from './reducers/comments';
 
 let initialState = {
-    comments: checkLocaleString(),
-    form: {
-        name: '',
-        comment: '',
-        invalidFields: []
-    }
+    comments: checkLocaleString()
 }
 
 function checkLocaleString() {
@@ -20,9 +16,11 @@ function checkLocaleString() {
     return (savedStore ? JSON.parse(savedStore) : []);
 }
 
-const store = createStore(reducer, initialState);
+const store = createStore(comments, initialState);
 
 ReactDOM.render(
-    <CommentsApp store={store} />,
+    <Provider store={store}>
+        <CommentsApp />
+    </Provider>,
     document.querySelector('.root')
 );

@@ -16,17 +16,14 @@ const comments = (state = {}, action) => {
             savedComments.push(newComment);
             localStorage.setItem('comments', JSON.stringify(savedComments));
 
-            return [
-                ...state,
-                newComment
-            ]
+            return Object.assign({}, state, {comments: savedComments});
 
         case "DELETE_COMMENT":
-            let newCommentList = state.filter(comment => {
+            let newCommentList = state.comments.filter(comment => {
                 return comment.id !== action.id;
             });
             localStorage.setItem('comments', JSON.stringify(newCommentList))
-            return newCommentList;
+            return Object.assign({}, state, { comments: newCommentList });
 
         default:
             return state;
