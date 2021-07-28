@@ -1,32 +1,53 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { mapStateToProps } from '../connect-functions';
+import { deleteComment } from '../actions/index';
 
-const CommentList = ({ comments, deleteComment }) => {
-    return (
-        <ul>
-            {
-                comments.map((com) => {
-                    return (
-                        <li key={com.id}>
-                            <article className="article slideInLeft">
-                                <h2 className="article__heading">{com.name}</h2>
 
-                                <p className="article__text">{com.comment}</p>
+class CommentList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
-                                <div className="article__time">{com.date}</div>
+    render()
+    {
+        console.log(this.props);
+        return (
+            <ul>
+                {
+                    this.props.comments.map((com) => {
+                        return (
+                            <li key={com.id}>
+                                <article className="article slideInLeft">
+                                    <h2 className="article__heading">{com.name}</h2>
 
-                                <div className="article__delete delete" aria-label="Удалить комментарий" tabIndex="0" onClick={ev => deleteComment(com.id)}>
-                                    <span className="delete__span span-top"></span>
-                                    <span className="delete__span span-bottom"></span>
-                                </div>
-                            </article>
-                        </li>
-                    );
-                })
-            }
-        </ul>
-    )
+                                    <p className="article__text">{com.comment}</p>
+
+                                    <div className="article__time">{com.date}</div>
+
+                                    <div className="article__delete delete" aria-label="Удалить комментарий" tabIndex="0" onClick={ev => this.props.deleteComment(com.id)}>
+                                        <span className="delete__span span-top"></span>
+                                        <span className="delete__span span-bottom"></span>
+                                    </div>
+                                </article>
+                            </li>
+                        );
+                    })
+                }
+            </ul>
+        )
+    }
 }
 
-export default CommentList;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteComment: (id) => dispatch(deleteComment(id))
+    }
+}
 
-// 
+CommentList = connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CommentList);
+
+export default CommentList;
