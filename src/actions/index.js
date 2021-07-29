@@ -14,24 +14,3 @@ export const deleteComment = (id) => {
         id
     }
 }
-
-export const onChangeInput = (value, input) => {
-    return {
-        type: 'SET_INPUT',
-        value,
-        input
-    }
-}
-
-export const clearForm = () => {
-    return {
-        type: 'CLEAR_FORM',
-    }
-}
-
-export const warnInvalid = (invalidFields) => {
-    return {
-        type: 'WARN_INVALID',
-        invalidFields
-    }
-}

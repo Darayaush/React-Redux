@@ -1,47 +1,29 @@
 import React from 'react';
+
 import { connect } from 'react-redux';
+import { mapStateToProps } from '../connect-functions';
+import { addComment } from '../actions/index';
 
 import CommentList from '../components/comment-list';
 import CommentForm from '../components/comment-form';
 
-import { addComment, deleteComment, onChangeInput, clearForm, warnInvalid } from '../actions/index';
-
-let CommentsApp = (props) => {
-    const {
-        comments,
-        form,
-        deleteComment,
-        addComment,
-        onChangeInput,
-        clearForm,
-        warnInvalid
-    } = props;
-
-    return (
+class CommentsApp extends React.Component {
+    render() {
+        return (
         <main className="main">
             <section className="section">
                 <h1 className="section__heading">Комментарии</h1>
-                <CommentList comments={comments} deleteComment={deleteComment} />
+                <CommentList />
             </section>
-            <CommentForm addComment={addComment} onChangeInput={onChangeInput} form={form} clearForm={clearForm} warnInvalid={warnInvalid} />
+            <CommentForm addComment={this.props.addComment}  />
         </main>
-    )
-}
-
-const mapStateToProps = (state) => {
-    return {
-        comments: state.comments,
-        form: state.form
+        )
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        addComment: (name, comment) => dispatch(addComment(name, comment)),
-        deleteComment: (id) => dispatch(deleteComment(id)),
-        onChangeInput: (value, input) => dispatch(onChangeInput(value, input)),
-        clearForm: () => dispatch(clearForm()),
-        warnInvalid: (invalidField) => dispatch(warnInvalid(invalidField)),
+        addComment: (name, comment) => dispatch(addComment(name, comment))
     }
 }
 
